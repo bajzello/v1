@@ -16,7 +16,7 @@ class OutdoorParticulateMatter extends FetchViaAPI {
         <div>
           <h1>Salon</h1>
           <h3>PM2.5: {apiFetch.value.FineParticulateMatter}</h3>
-          <h3>PM10.0: {apiFetch.value.CoarseParticulateMatter}</h3>
+          <h3>PM10: {apiFetch.value.CoarseParticulateMatter}</h3>
           <h3>Humidity: {apiFetch.value.Humidity}</h3>
           <h3>Temperature: {apiFetch.value.TemperatureC}</h3>
           <h3>IAQ: {apiFetch.value.MeasuredAirQuality}</h3>
