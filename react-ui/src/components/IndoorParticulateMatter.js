@@ -9,7 +9,9 @@ class OutdoorParticulateMatter extends FetchViaAPI {
   render() {
     const { apiFetch } = this.props;
 
-    if (apiFetch.fulfilled) {
+    if (apiFetch.pending) {
+      return (<h1>Loading...</h1>);
+    } else if (apiFetch.fulfilled) {
       return (
         <div>
           <h1>Indoor Air Quality</h1>
@@ -27,5 +29,5 @@ class OutdoorParticulateMatter extends FetchViaAPI {
 }
 
 export default connect((props, context) => ({
-  apiFetch: { url: `/indoor`, refreshInterval: 1000 }
+  apiFetch: { url: `/indoor`, refreshInterval: 25000 }
 }))(OutdoorParticulateMatter);

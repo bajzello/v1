@@ -15,7 +15,6 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h2>Welcome to React v.0.0.3</h2>
         </div>
-        <FetchViaAPI/>
         <OutdoorParticulateMatter/>
         <IndoorParticulateMatter/>
       </div>

@@ -9,11 +9,6 @@ const year = moment().year();
 
 app.use(express.static(__dirname + '/../react-ui/build'));
 
-app.get('/api', function (req, res) {
-  res.set('Content-Type', 'application/json');
-  res.send('{"message":"Hello from the custom server!"}');
-});
-
 app.get('/outdoor', function (req, res) {
   res.set('Content-Type', 'application/json');
   res.send('{"pm10":"10", "pm25":"25", "pm100":"100"}');
@@ -21,27 +16,10 @@ app.get('/outdoor', function (req, res) {
 
 app.get('/indoor', function (req, res) {
   res.set('Content-Type', 'application/json');
-
-  updateIndoorLatestData();
-
   res.send(latestIndoorEntries.data);
 });
 
-var numOfEntries = 0;
 var latestIndoorEntries = [];
-function updateIndoorLatestData() {
-  db.find({ requestType: 'air-measure-indoor'}, function(err, docs) {
-    console.log("updating numOfEntries...");
-    console.log("numOfEntries: " + numOfEntries);
-    numOfEntries = docs.length;
-  });
-
-
-  db.find({ $where: function () { return this.measureDateUnixTimestamp == 0; } },
-    function (err, docs) {
-      console.log(docs.length);
-  });
-};
 
 // setup a new database
 var Datastore = require('nedb'),
