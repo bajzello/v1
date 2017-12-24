@@ -10,11 +10,7 @@ class App extends Component {
       <div className="App">
         <div className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-<<<<<<< HEAD
           <h2>Welcome to React v.0.0.1</h2>
-=======
-          <h2>Welcome to React v.0.1</h2>
->>>>>>> 64448f9999551f6a4fd51d7d8c9641a8b2c58fb3
         </div>
         <p className="App-intro">
           {'This is '}
