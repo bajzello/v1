@@ -22,17 +22,26 @@ app.get('/outdoor', function (req, res) {
 app.get('/indoor', function (req, res) {
   res.set('Content-Type', 'application/json');
 
-  updateNumOfEntries();
+  updateIndoorLatestData();
 
-  res.send('{"pm25":' + numOfEntries + ', "pm100":"10"}');
+  res.send(latestIndoorEntries.data);
 });
 
 var numOfEntries = 0;
-function updateNumOfEntries() {
+var latestIndoorEntries = [];
+function updateIndoorLatestData() {
   db.find({ requestType: 'air-measure-indoor'}, function(err, docs) {
-    console.log("updating entries...");
+    console.log("updating numOfEntries...");
+    console.log("numOfEntries: " + numOfEntries);
     numOfEntries = docs.length;
-})};
+  });
+
+
+  db.find({ $where: function () { return this.measureDateUnixTimestamp == 0; } },
+    function (err, docs) {
+      console.log(docs.length);
+  });
+};
 
 // setup a new database
 var Datastore = require('nedb'),
@@ -43,7 +52,11 @@ db = new Datastore({ filename: '.data/datafile', autoload: true });
 // parse application/json
 app.use(bodyParser.json());
 
-
+// consider query with getting latest measureDateUnixTimestamp or storing in DB
+// the index of latest insert
+// for now latest entry is just stored in variables
+// TODO:
+// - use timestamp from measure not from moment of inserting
 app.post("/air-measure-indoor", function (request, response) {
   console.log("New air-measure-indoor: " + JSON.stringify(request.body));
 
@@ -57,6 +70,10 @@ app.post("/air-measure-indoor", function (request, response) {
     //else if(requestAdded) console.log("New air-measure-indoor request inserted to the database");
     response.end();
   });
+
+  latestIndoorEntries.measureDate = moment().format();
+  latestIndoorEntries.measureDateUnixTimestamp = moment().unix();
+  latestIndoorEntries.data = request.body;
 });
 
 app.listen(PORT, function () {

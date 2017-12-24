@@ -13,8 +13,12 @@ class OutdoorParticulateMatter extends FetchViaAPI {
       return (
         <div>
           <h1>Indoor Air Quality</h1>
-          <h3>PM2.5: {apiFetch.value.pm25}</h3>
-          <h3>PM10.0: {apiFetch.value.pm100}</h3>
+          <h3>PM2.5: {apiFetch.value.FineParticulateMatter}</h3>
+          <h3>PM10.0: {apiFetch.value.CoarseParticulateMatter}</h3>
+          <h3>Humidity: {apiFetch.value.Humidity}</h3>
+          <h3>Temperature: {apiFetch.value.TemperatureC}</h3>
+          <h3>IAQ: {apiFetch.value.MeasuredAirQuality}</h3>
+          <h3>Timestamp: {apiFetch.value.MeasuredAt}</h3>
         </div>
       );
     }
