@@ -3,7 +3,9 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 const request = require('request');
 const bodyParser = require('body-parser');
-
+const moment = require('moment');
+const day = moment().dayOfYear();
+const year = moment().year();
 
 app.use(express.static(__dirname + '/../react-ui/build'));
 
@@ -19,8 +21,17 @@ app.get('/outdoor', function (req, res) {
 
 app.get('/indoor', function (req, res) {
   res.set('Content-Type', 'application/json');
-  res.send('{"pm25":"2", "pm100":"10"}');
+
+  updateNumOfEntries();
+
+  res.send('{"pm25":' + numOfEntries + ', "pm100":"10"}');
 });
+
+var numOfEntries = 0;
+function updateNumOfEntries() {
+  db.find({ requestType: 'air-measure-indoor'}, function(err, docs) {
+    numOfEntries = docs.length;
+})};
 
 // setup a new database
 var Datastore = require('nedb'),
