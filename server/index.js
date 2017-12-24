@@ -30,6 +30,7 @@ app.get('/indoor', function (req, res) {
 var numOfEntries = 0;
 function updateNumOfEntries() {
   db.find({ requestType: 'air-measure-indoor'}, function(err, docs) {
+    console.log("updating entries...");
     numOfEntries = docs.length;
 })};
 

@@ -23,5 +23,5 @@ class OutdoorParticulateMatter extends FetchViaAPI {
 }
 
 export default connect((props, context) => ({
-  apiFetch: "/indoor"
+  apiFetch: { url: `/indoor`, refreshInterval: 1000 }
 }))(OutdoorParticulateMatter);
