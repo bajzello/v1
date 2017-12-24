@@ -3,6 +3,9 @@ import logo from './logo.svg';
 import 'whatwg-fetch';
 import { connect } from 'react-refetch';
 import './App.css';
+import FetchViaAPI from './components/FetchViaAPI'
+import OutdoorParticulateMatter from './components/OutdoorParticulateMatter'
+import IndoorParticulateMatter from './components/IndoorParticulateMatter'
 
 class App extends Component {
   render() {
@@ -12,15 +15,9 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h2>Welcome to React v.0.0.1</h2>
         </div>
-        <p className="App-intro">
-          {'This is '}
-          <a href="https://github.com/mars/heroku-cra-node">
-            {'create-react-app with a custom Node/Express server'}
-          </a><br/>
-        </p>
-        <p className="App-intro">
-          { this.renderMessage() }
-        </p>
+        <FetchViaAPI/>
+        <OutdoorParticulateMatter/>
+        <IndoorParticulateMatter/>
       </div>
     );
   }
