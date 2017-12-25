@@ -30,8 +30,8 @@ class Room extends FetchViaAPI {
               <CardTitle title={this.props.title} style={cardTitleStyle}/>
               <CardMedia
                 overlay={<CardTitle
-                  title={apiFetch.value.FineParticulateMatter + "μg / " + apiFetch.value.CoarseParticulateMatter + "μg"}
-                  subtitle={apiFetch.value.TemperatureC + "°C / " + apiFetch.value.Humidity + "%"} />}>
+                  title={apiFetch.value.FineParticulateMatter + "μg/m³   |   " + apiFetch.value.CoarseParticulateMatter + "μg/m³"}
+                  subtitle={apiFetch.value.TemperatureC + "°C   |   " + apiFetch.value.Humidity + "%"} />}>
                 <img src={this.props.i}/>
               </CardMedia>
             </Card>
