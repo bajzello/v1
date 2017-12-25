@@ -14,21 +14,44 @@ app.get('/outdoor', function (req, res) {
   res.send('{"pm10":"10", "pm25":"25", "pm100":"100"}');
 });
 
-app.get('/indoor', function (req, res) {
+var latestIndoorEntries = [];
+var livingRoom = [];
+var kidsRoom = [];
+
+app.use(bodyParser.json());
+
+app.get('/indoor-living-room', function (req, res) {
   res.set('Content-Type', 'application/json');
-  res.send(latestIndoorEntries.data);
+  res.send(livingRoom.data);
 });
 
-var latestIndoorEntries = [];
+app.get('/indoor-kids-room', function (req, res) {
+  res.set('Content-Type', 'application/json');
+  res.send(kidsRoom.data);
+});
+
+
+app.post("/air-measure-indoor-living-room", function (request, response) {
+  livingRoom.measureDate = moment().format();
+  livingRoom.measureDateUnixTimestamp = moment().unix();
+  livingRoom.data = request.body;
+
+  response.end();
+});
+
+app.post("/air-measure-indoor-kids-room", function (request, response) {
+  kidsRoom.measureDate = moment().format();
+  kidsRoom.measureDateUnixTimestamp = moment().unix();
+  kidsRoom.data = request.body;
+
+  response.end();
+});
 
 // setup a new database
 var Datastore = require('nedb'),
 // Security note: the database is saved to the file `datafile` on the local filesystem. It's deliberately placed in the `.data` directory
 // which doesn't get copied if someone remixes the project.
 db = new Datastore({ filename: '.data/datafile', autoload: true });
-
-// parse application/json
-app.use(bodyParser.json());
 
 // consider query with getting latest measureDateUnixTimestamp or storing in DB
 // the index of latest insert
