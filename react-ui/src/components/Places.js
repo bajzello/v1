@@ -44,7 +44,7 @@ export default class Places extends Component {
       </GridTile>
       <GridTile
         cols={1}>
-        <RoomCard title="Kids Room" i={living_room_image} url="/indoor-kids-room"/>
+        <RoomCard title="Kids Room" i={kids_room_image} url="/indoor-kids-room"/>
       </GridTile>
     </GridList>
     </div>
