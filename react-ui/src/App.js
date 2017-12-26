@@ -7,7 +7,7 @@ import './App.css';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from 'material-ui/AppBar';
 
-import Rooms from './components/Rooms';
+import Places from './components/Places';
 
 export default class App extends Component {
   render() {
@@ -17,7 +17,7 @@ export default class App extends Component {
         <AppBar
           title="Welcome to Strumiany"
           />
-        <Rooms/>
+        <Places/>
         </div>
       </MuiThemeProvider>
     );
