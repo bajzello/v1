@@ -1,6 +1,6 @@
 import React from 'react';
 import 'whatwg-fetch';
-import { connect } from 'react-refetch';
+import { connect, PromiseState } from 'react-refetch';
 
 import FetchViaAPI from './FetchViaAPI'
 
@@ -12,19 +12,30 @@ const cardTitleStyle = {
   textAlign: 'center',
 };
 
-class Outside extends FetchViaAPI {
+class OutsideCard extends FetchViaAPI {
   render() {
-    const { apiFetch } = this.props;
+    const { airQualityFetch, weatherFetch } = this.props;
 
-    if (apiFetch.pending) {
+    // compose multiple PromiseStates together to wait on them as a whole
+    const allFetches = PromiseState.all([airQualityFetch, weatherFetch]);
+
+    if (allFetches.pending) {
       return null;
-    } else if (apiFetch.fulfilled) {
+    }
+    else if (allFetches.rejected) {
+      return <Error error={allFetches.reason}/>
+    }
+    else if (allFetches.fulfilled) {
+      //decompose the PromiseState back into individual
+      const [air, weather] = allFetches.value;
+
       return (
             <Card>
               <CardTitle title={this.props.title} style={cardTitleStyle}/>
               <CardMedia
                 overlay={<CardTitle
-                  title={apiFetch.value.PM1 + "μg/m³   |   " + apiFetch.value.PM25 + "μg/m³   |   " + apiFetch.value.PM10 + "μg/m³"}
+                  title={air.PM1 + "μg/m³   |   " + air.PM25 + "μg/m³   |   " + air.PM10 + "μg/m³"}
+                  subtitle={weather.currently.temperature + "°C   |   " + weather.currently.humidity*100 + "%"}
                    />}>
                 <img src={this.props.i}/>
               </CardMedia>
@@ -36,7 +47,12 @@ class Outside extends FetchViaAPI {
 }
 
 export default connect((props, context) => ({
-  apiFetch: {
-    url: props.url,
-    refreshInterval: 55000 }
-}))(Outside);
+  airQualityFetch: {
+      url: props.airQualityUrl,
+      refreshInterval: 55000
+     },
+  weatherFetch: {
+      url: props.weatherUrl,
+      refreshInterval: 55000
+     },
+}))(OutsideCard);

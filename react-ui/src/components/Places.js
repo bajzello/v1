@@ -36,9 +36,12 @@ export default class Places extends Component {
     >
       <GridTile
         cols={2}>
-        <OutsideCard title="Outdoor" i={house_image} url="https://cors-anywhere.herokuapp.com/http://api.looko2.com/?method=GPSGetClosestLooko&lat=49.999731&lon=20.094633&token=1510759476"/>
+        <OutsideCard title="Outdoor" i={house_image}
+          airQualityUrl="/outdoor-air-quality"
+          weatherUrl="/weather"
+          />
       </GridTile>
-      <GridTile
+        <GridTile
         cols={1}>
         <RoomCard title="Living Room" i={living_room_image} url="/indoor-living-room"/>
       </GridTile>

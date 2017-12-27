@@ -1,4 +1,5 @@
 const express = require('express');
+const Client = require('node-rest-client').Client;
 const app = express();
 const PORT = process.env.PORT || 5000;
 const request = require('request');
@@ -7,11 +8,41 @@ const moment = require('moment');
 const day = moment().dayOfYear();
 const year = moment().year();
 
+var client = new Client();
+
+var headers = {
+  "Content-Type": "application-json",
+}
+var httpArgs = {
+  "headers": headers
+}
+
 app.use(express.static(__dirname + '/../react-ui/build'));
 
-app.get('/outdoor', function (req, res) {
+var outdoorAirQuality;
+
+app.get('/outdoor-air-quality', function (req, res) {
+  client.get("http://api.looko2.com/?method=GPSGetClosestLooko&lat=49.999731&lon=20.094633&token=1510759476", httpArgs, function(data, response) {
+    if (response.statusCode == 200) {
+      outdoorAirQuality = data;
+    }
+  });
+
   res.set('Content-Type', 'application/json');
-  res.send('{"pm10":"10", "pm25":"25", "pm100":"100"}');
+  res.send(outdoorAirQuality);
+});
+
+var weather;
+
+app.get('/weather', function (req, res) {
+  client.get("https://api.darksky.net/forecast/c3e50046c72f3cfd1f021528cab2684d/49.999731,20.094633?units=auto", httpArgs, function(data, response) {
+    if (response.statusCode == 200) {
+      weather = data;
+    }
+  });
+
+  res.set('Content-Type', 'application/json');
+  res.send(weather);
 });
 
 var latestIndoorEntries = [];
