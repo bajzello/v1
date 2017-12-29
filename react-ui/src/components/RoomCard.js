@@ -24,7 +24,7 @@ class RoomCard extends FetchViaAPI {
               <CardTitle title={this.props.title} style={cardTitleStyle}/>
               <CardMedia
                 overlay={<CardTitle
-                  title={apiFetch.value.FineParticulateMatter + "μg/m³   |   " + apiFetch.value.CoarseParticulateMatter + "μg/m³"}
+                  title={"IAQ: " + apiFetch.value.MeasuredAirQuality + "     |     " + apiFetch.value.FineParticulateMatter + "μg/m³   |   " + apiFetch.value.CoarseParticulateMatter + "μg/m³"}
                   subtitle={apiFetch.value.TemperatureC + "°C   |   " + apiFetch.value.Humidity + "%"} />}>
                 <img src={this.props.i}/>
               </CardMedia>
