@@ -7,6 +7,7 @@ const bodyParser = require('body-parser');
 const moment = require('moment');
 const day = moment().dayOfYear();
 const year = moment().year();
+const logger = require('heroku-logger')
 
 var client = new Client();
 
@@ -22,6 +23,7 @@ app.use(express.static(__dirname + '/../react-ui/build'));
 var outdoorAirQuality;
 
 app.get('/outdoor-air-quality', function (req, res) {
+  logger.info("/outdoor-air-quality");
   client.get("http://api.looko2.com/?method=GPSGetClosestLooko&lat=49.999731&lon=20.094633&token=1510759476", httpArgs, function(data, response) {
     if (response.statusCode == 200) {
       outdoorAirQuality = data;
@@ -35,6 +37,7 @@ app.get('/outdoor-air-quality', function (req, res) {
 var weather;
 
 app.get('/weather', function (req, res) {
+  logger.info("/weather");
   client.get("https://api.darksky.net/forecast/c3e50046c72f3cfd1f021528cab2684d/49.999731,20.094633?units=auto", httpArgs, function(data, response) {
     if (response.statusCode == 200) {
       weather = data;
@@ -52,17 +55,20 @@ var kidsRoom = [];
 app.use(bodyParser.json());
 
 app.get('/indoor-living-room', function (req, res) {
+  logger.info("/indoor-living-room");
   res.set('Content-Type', 'application/json');
   res.send(livingRoom.data);
 });
 
 app.get('/indoor-kids-room', function (req, res) {
+  logger.info("/indoor-kids-room");
   res.set('Content-Type', 'application/json');
   res.send(kidsRoom.data);
 });
 
 
 app.post("/air-measure-indoor-living-room", function (request, response) {
+  logger.info("/air-measure-indoor-living-room");
   livingRoom.measureDate = moment().format();
   livingRoom.measureDateUnixTimestamp = moment().unix();
   livingRoom.data = request.body;
@@ -71,6 +77,7 @@ app.post("/air-measure-indoor-living-room", function (request, response) {
 });
 
 app.post("/air-measure-indoor-kids-room", function (request, response) {
+  logger.info("/air-measure-indoor-kids-room");
   kidsRoom.measureDate = moment().format();
   kidsRoom.measureDateUnixTimestamp = moment().unix();
   kidsRoom.data = request.body;
