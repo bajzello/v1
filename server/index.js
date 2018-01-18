@@ -22,6 +22,12 @@ app.use(express.static(__dirname + '/../react-ui/build'));
 
 var outdoorAirQuality;
 
+app.get('/nothing', function (req, res) {
+  logger.info("/nothing");
+  res.set('Content-Type', 'application/json');
+  res.send("nothing");
+});
+
 app.get('/outdoor-air-quality', function (req, res) {
   logger.info("/outdoor-air-quality");
   client.get("http://api.looko2.com/?method=GPSGetClosestLooko&lat=49.999731&lon=20.094633&token=1510759476", httpArgs, function(data, response) {
@@ -66,6 +72,26 @@ app.get('/indoor-kids-room', function (req, res) {
   res.send(kidsRoom.data);
 });
 
+/////////------ Devices
+
+var devices = {};
+devices.sharp = {};
+devices.sharp.mode = "OFF";
+
+
+app.get('/device/sharp', function (req, res) {
+  logger.info("GET /device/sharp");
+  res.set('Content-Type', 'application/json');
+  console.log(devices.sharp);
+  res.send(JSON.stringify(devices.sharp));
+});
+
+app.post('/device/sharp', function (req, res) {
+  logger.info("POST /device/sharp" + JSON.stringify(req.body));
+  devices.sharp = req.body;
+
+  res.end();
+});
 
 app.post("/air-measure-indoor-living-room", function (request, response) {
   logger.info("/air-measure-indoor-living-room");
@@ -99,7 +125,7 @@ db = new Datastore({ filename: '.data/datafile', autoload: true });
 app.post("/air-measure-indoor", function (request, response) {
   console.log("New air-measure-indoor: " + JSON.stringify(request.body));
 
-  // Store the measure in DB
+  Store the measure in DB
   db.insert({ requestType: "air-measure-indoor",
              requestBody: request.body,
              measureDate: moment().format(),
@@ -113,6 +139,10 @@ app.post("/air-measure-indoor", function (request, response) {
   latestIndoorEntries.measureDate = moment().format();
   latestIndoorEntries.measureDateUnixTimestamp = moment().unix();
   latestIndoorEntries.data = request.body;
+});
+
+app.post("/log", function (request, response) {
+  console.log("log: " + JSON.stringify(request.body));
 });
 
 app.listen(PORT, function () {

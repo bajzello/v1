@@ -10,7 +10,8 @@
     "react-dom": "^15.4.2",
     "react-refetch": "^1.0.0",
     "whatwg-fetch": "^2.0.2",
-    "material-ui": "^0.20.0"
+    "material-ui": "^0.20.0",
+    "axios": "^0.17.1"
   },
   "scripts": {
     "start": "react-scripts start",
