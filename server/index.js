@@ -82,7 +82,7 @@ devices.sharp.mode = "OFF";
 app.get('/device/sharp', function (req, res) {
   // logger.info("GET /device/sharp");
   res.set('Content-Type', 'application/json');
-  logger.info(devices.sharp);
+  //logger.info(devices.sharp);
   res.send(JSON.stringify(devices.sharp));
 });
 
