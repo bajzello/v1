@@ -30,7 +30,7 @@ export default class SharpDevice extends Component {
   }
 
   componentDidMount() {
-    setInterval(this.loadDataFromServer.bind(this), 1000);
+    setInterval(this.loadDataFromServer.bind(this), 10000);
   }
 
   componentWillUnmount() {
