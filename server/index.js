@@ -125,7 +125,7 @@ db = new Datastore({ filename: '.data/datafile', autoload: true });
 app.post("/air-measure-indoor", function (request, response) {
   console.log("New air-measure-indoor: " + JSON.stringify(request.body));
 
-  Store the measure in DB
+  //Store the measure in DB
   db.insert({ requestType: "air-measure-indoor",
              requestBody: request.body,
              measureDate: moment().format(),
