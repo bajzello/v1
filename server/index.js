@@ -165,6 +165,9 @@ const IFTTT_MAKER_URL="https://maker.ifttt.com/use/bMrh_vl_fCzvMIoJEtpnEJ"
 // - rotates through auto -> pollen -> max -> med -> low
 // - pollen The unit will operate at High Level for 10 minutes, then will alternate between MEDIUM and HIGH.
 
+var baseURL = "https://maker.ifttt.com/trigger/";
+var withKey = "/with/key/";
+
 var sharpMode = SHARP_MODE_OFF;
 var aosMode = AOS_MODE_OFF;
 var sharpSpeedMode = SHARP_MODE_SPEED_LOW;
