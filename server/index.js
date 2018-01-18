@@ -165,6 +165,14 @@ const IFTTT_MAKER_URL="https://maker.ifttt.com/use/bMrh_vl_fCzvMIoJEtpnEJ"
 // - rotates through auto -> pollen -> max -> med -> low
 // - pollen The unit will operate at High Level for 10 minutes, then will alternate between MEDIUM and HIGH.
 
+var iftttId;
+
+// Get the Id from IFTTT Maker URL.i O
+if(!IFTTT_MAKER_URL)
+  console.log("You need to set your IFTTT Maker URL - copy the URL from https://ifttt.com/services/maker/settings into the .env file against 'IFTTT_MAKER_URL'");
+else
+  iftttId = IFTTT_MAKER_URL.split('https://maker.ifttt.com/use/')[1];
+
 var baseURL = "https://maker.ifttt.com/trigger/";
 var withKey = "/with/key/";
 
