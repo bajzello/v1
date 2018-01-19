@@ -83,6 +83,9 @@ app.get('/device/sharp', function (req, res) {
   // logger.info("GET /device/sharp");
   res.set('Content-Type', 'application/json');
   //logger.info(devices.sharp);
+
+  devices.sharp.mode = sharpMode;
+
   res.send(JSON.stringify(devices.sharp));
 });
 
