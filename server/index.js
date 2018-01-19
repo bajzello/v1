@@ -76,7 +76,7 @@ app.get('/indoor-kids-room', function (req, res) {
 
 var devices = {};
 devices.sharp = {};
-devices.sharp.mode = "OFF";
+devices.sharp.mode = sharpMode;
 
 
 app.get('/device/sharp', function (req, res) {
