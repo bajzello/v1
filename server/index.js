@@ -95,6 +95,8 @@ app.post('/device/sharp', function (req, res) {
   if (req.body.mode != sharpMode)
   {
     logger.info("Got instruction to change sharpMode to: " + req.body.mode);
+
+    sharpOff();
   }
 
   res.end();
