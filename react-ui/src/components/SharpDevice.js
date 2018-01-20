@@ -49,7 +49,7 @@ export default class SharpDevice extends Component {
       });
   }
 
-  modeClick(type){
+  turnOffClick(type){
       axios.post('/device/sharp', {
         mode: "sharp_off"
       })
