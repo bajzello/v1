@@ -85,6 +85,7 @@ app.get('/device/sharp', function (req, res) {
   //logger.info(devices.sharp);
 
   devices.sharp.mode = sharpMode;
+  devices.sharp.speed = sharpSpeedMode;
 
   res.send(JSON.stringify(devices.sharp));
 });
@@ -92,21 +93,38 @@ app.get('/device/sharp', function (req, res) {
 app.post('/device/sharp', function (req, res) {
   logger.info("POST /device/sharp" + JSON.stringify(req.body));
 
-  if (req.body.mode != sharpMode)
-  {
-    logger.info("Got instruction to change sharpMode to: " + req.body.mode);
+  var reqMode = req.body.mode;
+  var reqSpeed = req.body.speed;
 
-    if (req.body.mode == SHARP_MODE_OFF)
+  if (reqMode != sharpMode)
+  {
+    logger.info("Got instruction to change sharpMode to: " + reqMode);
+
+    if (reqMode == SHARP_MODE_OFF)
     {
       sharpOff();
     }
-    else if (req.body.mode == SHARP_MODE_CLEAN)
+    else if (reqMode == SHARP_MODE_CLEAN)
     {
       sharpClean();
     }
-    else if (req.body.mode == SHARP_MODE_CLEAN_AND_HUMIDIFY)
+    else if (reqMode == SHARP_MODE_CLEAN_AND_HUMIDIFY)
     {
       sharpCleanAndHumidify();
+    }
+  }
+
+  if (reqSpeed != sharpSpeedMode)
+  {
+    logger.info("Got instruction to change sharpSpeedMode to: " + reqSpeed);
+
+    if (reqSpeed == SHARP_MODE_SPEED_LOW)
+    {
+      sharpLowSpeed();
+    }
+    else if (reqSpeed == SHARP_MODE_SPEED_HIGH)
+    {
+      sharpHighSpeed();
     }
   }
 

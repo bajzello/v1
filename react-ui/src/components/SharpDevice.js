@@ -25,7 +25,8 @@ export default class SharpDevice extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      mode: "off"
+      mode: "off",
+      speed: ""
     };
   }
 
@@ -39,7 +40,8 @@ export default class SharpDevice extends Component {
 
   turnOffClick(type){
       axios.post('/device/sharp', {
-        mode: "sharp_off"
+        mode: "sharp_off",
+        speed: this.state.speed
       })
       .then(function (response) {
         console.log(response);
@@ -51,7 +53,8 @@ export default class SharpDevice extends Component {
 
   turnCleanClick(type){
       axios.post('/device/sharp', {
-        mode: "sharp_clean"
+        mode: "sharp_clean",
+        speed: this.state.speed
       })
       .then(function (response) {
         console.log(response);
@@ -63,7 +66,21 @@ export default class SharpDevice extends Component {
 
   turnHumidifyClick(type){
       axios.post('/device/sharp', {
-        mode: "sharp_clean_and_humidify"
+        mode: "sharp_clean_and_humidify",
+        speed: this.state.speed
+      })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
+  turnSpeedClick(type){
+      axios.post('/device/sharp', {
+        mode: this.state.mode,
+        speed: this.state.speed == "sharp_speed_low" ? "sharp_speed_high" : "sharp_speed_low"
       })
       .then(function (response) {
         console.log(response);
@@ -78,7 +95,8 @@ export default class SharpDevice extends Component {
     .then((result)=> {
       console.log("device - sharp loaded" + result.data)
       this.setState({
-        mode: result.data.mode
+        mode: result.data.mode,
+        speed: result.data.speed
       });
     });
   }
@@ -93,6 +111,7 @@ export default class SharpDevice extends Component {
             <RaisedButton label="TURN OFF" onClick={this.turnOffClick.bind(this)}/>
             <RaisedButton label="CLEAN" onClick={this.turnCleanClick.bind(this)}/>
             <RaisedButton label="HUMIDIFY" onClick={this.turnHumidifyClick.bind(this)}/>
+            <RaisedButton label={this.state.speed} onClick={this.turnSpeedClick.bind(this)}/>
           </CardMedia>
         </Card>
       );
