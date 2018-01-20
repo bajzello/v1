@@ -49,6 +49,18 @@ export default class SharpDevice extends Component {
       });
   }
 
+  modeClick(type){
+      axios.post('/device/sharp', {
+        mode: "sharp_off"
+      })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
   loadDataFromServer() {
     axios.get('/device/sharp')
     .then((result)=> {
@@ -66,6 +78,7 @@ export default class SharpDevice extends Component {
           <CardMedia>
             <img src={this.props.i}/>
             <RaisedButton label={this.state.mode} onClick={this.modeClick.bind(this)}/>
+            <RaisedButton label="TURN OFF" onClick={this.turnOffClick.bind(this)}/>
           </CardMedia>
         </Card>
       );

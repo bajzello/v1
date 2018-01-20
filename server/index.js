@@ -90,8 +90,12 @@ app.get('/device/sharp', function (req, res) {
 });
 
 app.post('/device/sharp', function (req, res) {
-  // logger.info("POST /device/sharp" + JSON.stringify(req.body));
-  devices.sharp = req.body;
+  logger.info("POST /device/sharp" + JSON.stringify(req.body));
+
+  if (req.body.mode != sharpMode)
+  {
+    logger.info("Got instruction to change sharpMode to: " + req.body.mode);
+  }
 
   res.end();
 });
