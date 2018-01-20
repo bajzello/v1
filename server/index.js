@@ -96,7 +96,18 @@ app.post('/device/sharp', function (req, res) {
   {
     logger.info("Got instruction to change sharpMode to: " + req.body.mode);
 
-    sharpOff();
+    if (req.body.mode == SHARP_MODE_OFF)
+    {
+      sharpOff();
+    }
+    else if (req.body.mode == SHARP_MODE_CLEAN)
+    {
+      sharpClean();
+    }
+    else if (req.body.mode == SHARP_MODE_CLEAN_AND_HUMIDIFY)
+    {
+      sharpCleanAndHumidify();
+    }
   }
 
   res.end();

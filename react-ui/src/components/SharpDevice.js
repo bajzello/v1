@@ -37,9 +37,9 @@ export default class SharpDevice extends Component {
     this.serverRequest.abort();
   }
 
-  modeClick(type){
+  turnOffClick(type){
       axios.post('/device/sharp', {
-        mode: this.state.mode == "OFF" ? "ON" : "OFF"
+        mode: "sharp_off"
       })
       .then(function (response) {
         console.log(response);
@@ -49,9 +49,21 @@ export default class SharpDevice extends Component {
       });
   }
 
-  turnOffClick(type){
+  turnCleanClick(type){
       axios.post('/device/sharp', {
-        mode: "sharp_off"
+        mode: "sharp_clean"
+      })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
+  turnHumidifyClick(type){
+      axios.post('/device/sharp', {
+        mode: "sharp_clean_and_humidify"
       })
       .then(function (response) {
         console.log(response);
@@ -77,8 +89,10 @@ export default class SharpDevice extends Component {
           <CardTitle title={this.props.title} style={cardTitleStyle}/>
           <CardMedia>
             <img src={this.props.i}/>
-            <RaisedButton label={this.state.mode} onClick={this.modeClick.bind(this)}/>
+            <RaisedButton label={this.state.mode} disabled={true}/>
             <RaisedButton label="TURN OFF" onClick={this.turnOffClick.bind(this)}/>
+            <RaisedButton label="CLEAN" onClick={this.turnCleanClick.bind(this)}/>
+            <RaisedButton label="HUMIDIFY" onClick={this.turnHumidifyClick.bind(this)}/>
           </CardMedia>
         </Card>
       );
