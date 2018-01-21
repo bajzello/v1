@@ -160,6 +160,7 @@ app.post('/device/aos', function (req, res) {
     {
       aosOff();
     }
+  }
 
   res.end();
 });
