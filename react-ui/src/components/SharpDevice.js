@@ -81,6 +81,7 @@ export default class SharpDevice extends Component {
       axios.post('/device/sharp', {
         mode: this.state.mode,
         speed: this.state.speed == "sharp_speed_low" ? "sharp_speed_high" : "sharp_speed_low"
+         
       })
       .then(function (response) {
         console.log(response);

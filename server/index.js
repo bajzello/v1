@@ -131,6 +131,39 @@ app.post('/device/sharp', function (req, res) {
   res.end();
 });
 
+devices.aos = {};
+devices.aos.mode = aosMode;
+
+
+app.get('/device/aos', function (req, res) {
+  res.set('Content-Type', 'application/json');
+
+  devices.aos.mode = aosMode;
+
+  res.send(JSON.stringify(devices.aos));
+});
+
+app.post('/device/aos', function (req, res) {
+  logger.info("POST /device/aos" + JSON.stringify(req.body));
+
+  var reqMode = req.body.mode;
+
+  if (reqMode != aosMode)
+  {
+    logger.info("Got instruction to change aosMode to: " + reqMode);
+
+    if (reqMode == AOS_MODE_ON)
+    {
+      aosOn();
+    }
+    else if (reqMode == AOS_MODE_OFF)
+    {
+      aosOff();
+    }
+
+  res.end();
+});
+
 app.post("/air-measure-indoor-living-room", function (request, response) {
   logger.info("/air-measure-indoor-living-room");
   livingRoom.measureDate = moment().format();

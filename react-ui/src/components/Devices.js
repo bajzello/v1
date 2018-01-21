@@ -8,6 +8,9 @@ import RoomCard from './RoomCard';
 import SharpDevice from './SharpDevice';
 import sharp_image from './../images/sharp.jpg';
 
+import AOSDevice from './AOSDevice';
+import aos_image from './../images/aos.jpg';
+
 
 
 const styles = {
@@ -36,6 +39,10 @@ export default class Devices extends Component {
       <GridTile
         cols={1}>
         <SharpDevice title="Sharp" i={sharp_image}/>
+      </GridTile>
+      <GridTile
+        cols={1}>
+        <AOSDevice title="Air-O-Swiss" i={aos_image}/>
       </GridTile>
     </GridList>
     </div>
