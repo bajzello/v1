@@ -20,7 +20,8 @@
     "body-parser": "^1.18.2",
     "moment": "^2.20.1",
     "node-rest-client": "^3.1.0",
-    "heroku-logger": "0.3.0"
+    "heroku-logger": "0.3.0",
+    "miio": "0.14.1"
   },
   "repository": {
     "type": "git",

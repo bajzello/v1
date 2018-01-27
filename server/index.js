@@ -8,6 +8,7 @@ const moment = require('moment');
 const day = moment().dayOfYear();
 const year = moment().year();
 const logger = require('heroku-logger')
+const miio = require('miio');
 
 var client = new Client();
 
@@ -22,9 +23,19 @@ app.use(express.static(__dirname + '/../react-ui/build'));
 
 var outdoorAirQuality;
 
+//const XIAOMI_AIR_PURIFIER_PRO_IP = "176.104.176.194"
+const XIAOMI_AIR_PURIFIER_PRO_IP = "192.168.1.140"
+//const XIAOMI_AIR_PURIFIER_PRO_IP = "192.168.1.1"
+
 app.get('/nothing', function (req, res) {
   logger.info("/nothing");
   res.set('Content-Type', 'application/json');
+
+  miio.device({address: XIAOMI_AIR_PURIFIER_PRO_IP})
+    .then(device => device.setPower(!device.power))
+    .catch(err => console.log("Error", err));
+
+
   res.send("nothing");
 });
 
@@ -376,12 +387,22 @@ function sharpClean() {
   sharpMode = SHARP_MODE_CLEAN;
   logger.info("--->>> set sharpMode to: " + sharpMode);
   triggerIFTTT(IFTTT_EVENT_SHARP_CLEAN);
+
+  logger.info("Turning Xiaomi Pro on");
+  miio.device({address: XIAOMI_AIR_PURIFIER_PRO_IP})
+    .then(device => device.setPower(true))
+    .catch(err => console.log("Error", err));
 }
 
 function sharpOff() {
   sharpMode = SHARP_MODE_OFF;
   logger.info("--->>> set sharpMode to: " + sharpMode);
   triggerIFTTT(IFTTT_EVENT_SHARP_OFF);
+
+  logger.info("Turning Xiaomi Pro off");
+  miio.device({address: XIAOMI_AIR_PURIFIER_PRO_IP})
+    .then(device => device.setPower(false))
+    .catch(err => console.log("Error", err));
 }
 
 function sharpSpeedPress() {
@@ -398,6 +419,20 @@ function aosOn() {
   aosMode = AOS_MODE_ON;
   logger.info("--->>> set aosMode to: " + aosMode);
   triggerIFTTT(IFTTT_EVENT_AOS_ON);
+}
+
+function xiaomiProOn() {
+  logger.info("Turning Xiaomi Pro on");
+  miio.device({address: XIAOMI_AIR_PURIFIER_PRO_IP})
+    .then(device => device.setPower(true))
+    .catch(err => console.log("Error", err));
+}
+
+function xiaomiProOff() {
+  logger.info("Turning Xiaomi Pro off");
+  miio.device({address: XIAOMI_AIR_PURIFIER_PRO_IP})
+    .then(device => device.setPower(off))
+    .catch(err => console.log("Error", err));
 }
 
 function triggerIFTTT(triggerEvent){
